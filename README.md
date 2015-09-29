@@ -70,12 +70,12 @@ assert(isHeavy(Car("Honda", "Civic", 2600)))
 Boilerplate is all but gone and works for any shallow property, including case class parameters, and any nullary methods.
 
 ```scala
+def what[A](a: A)(implicit get: Prop.anyFieldNameWillWork.Extruder[A, Option[List[String]]): String =
+  get(a).map(_.mkString(",")).getOrElse("...")
+
 trait Thing {
   def anyFieldNameWillWork: Option[List[String]]
 }
-
-def what[A](thing: Thing)(implicit get: Prop.anyFieldNameWillWork.Extruder[A, Option[List[String]]): String =
-  get(thing).map(_.mkString(",")).getOrElse("...")
 
 val myThing = new Thing {
   def anyFieldNameWillWork = Some(List("a", "b", "c"))
