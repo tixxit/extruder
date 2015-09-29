@@ -1,9 +1,5 @@
 # Extruder
 
-Extrude values out of your generic objects from property shaped holes.
-
-## What?
-
 An example of using implicit macros to reduce boilerplate. Read the motivation.
 
 ## Motivation
