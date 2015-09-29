@@ -6,7 +6,7 @@ An example of using implicit macros to reduce boilerplate. Read the motivation.
 
 Let's say that we have a bunch of case classes that all have a common property, but don't extend a common trait with this property. For example, `weight: Int`:
 
-```
+```scala
 case class Cat(name: String, weight: Int)
 case class Tool(weight: Int)
 case class Car(make: String, model: String, weight: Int)
@@ -43,7 +43,7 @@ object HasWeight {
 
 We can then use this type class in our method:
 
-``scala
+```scala
 def isHeavy[A](item: A)(implicit getWeight: HasWeight[A]): Boolean =
   getWeight(item) > 20
 
