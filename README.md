@@ -4,7 +4,7 @@ An example of using implicit macros to reduce boilerplate. Read the motivation.
 
 ## Motivation
 
-Let's say that we have a bunch of case classes that all have a common property, but don't extend a common trait with this property. For example, a `weight` property:
+Let's say that we have a bunch of case classes that all have a common property, but don't extend a common trait with this property. For example, `weight: Int`:
 
 ```
 case class Cat(name: String, weight: Int)
@@ -13,16 +13,8 @@ case class Car(make: String, model: String, weight: Int)
 ```
 
 We want to be able to write a generic `isHeavy` function that will take any
-item (`Cat`, `Tool`, `Car`, etc) and tell us if it is heavy (over 20lbs).
-
-```scala
-assert(!isHeavy(Cat("Mittens", 16)))
-assert(!isHeavy(Tool(4)))
-assert(isHeavy(Car("Honda", "Civic", 2600)))
-```
-
-In a dynamic language, we would just use the property and everything would
-work.
+item (`Cat`, `Tool`, `Car`, etc) and tell us if it is heavy (over 20lbs).  In a
+dynamic language, we would just use the property and everything would work.
 
 ```scala
 def isHeavy[A](item: A): Boolean = item.weight > 20
@@ -54,6 +46,10 @@ We can then use this type class in our method:
 ``scala
 def isHeavy[A](item: A)(implicit getWeight: HasWeight[A]): Boolean =
   getWeight(item) > 20
+
+assert(!isHeavy(Cat("Mittens", 16)))
+assert(!isHeavy(Tool(4)))
+assert(isHeavy(Car("Honda", "Civic", 2600)))
 ```
 
 This is a bit unsatisfying though; it's a fairly heavy weight solution to a
@@ -65,6 +61,10 @@ Extruder removes a lot of this boilerplate - letting us, essentially, create the
 ```scala
 def isHeavy[A](item: A)(implicit getWeight: Prop.weight.Extruder[A, Int]): Boolean =
   getWeight(item) > 20
+
+assert(!isHeavy(Cat("Mittens", 16)))
+assert(!isHeavy(Tool(4)))
+assert(isHeavy(Car("Honda", "Civic", 2600)))
 ```
 
 Boilerplate is all but gone and works for any shallow property, including case class parameters, and any nullary methods.
