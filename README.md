@@ -4,7 +4,7 @@ Extrude values out of your generic objects from property shaped holes.
 
 ## What?
 
-Implicit macros to create type classes to extract
+An example of using implicit macros to reduce boilerplate. Read the motivation.
 
 ## Motivation
 
